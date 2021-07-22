@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Task = ({title, description, }) => {
+const Task = ({title, description}) => {
     return (
         <section className="card mt-5 shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">

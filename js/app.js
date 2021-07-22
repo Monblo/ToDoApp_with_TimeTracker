@@ -1,20 +1,23 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import NewTask from "./NewTask";
 import Task from "./Task";
 import {getTasks} from "./api/tasks";
 
 function App() {
-  const [task, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
-  getTasks(setTask);
+  useEffect(() => {
+    getTasks(setTasks);
+  },[]);
 
-  console.log(task)
-
+  const addNewTask = (task) => {
+    setTasks(prev => [task, ...prev])
+  };
 
   return <>
-    <NewTask />
-    <Task />
+    <NewTask onNewTask={addNewTask}/>
+    {tasks.map((el, i) => <Task key={i} {...el} />)}
   </>
 }
 
