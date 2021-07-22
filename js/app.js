@@ -1,8 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from "react-dom";
+import NewTask from "./NewTask";
+import Task from "./Task";
+import {getTasks} from "./api/tasks";
 
 function App() {
-  return <h1>Hello World</h1>
+  const [task, setTask] = useState([]);
+
+  getTasks(setTask);
+
+  console.log(task)
+
+
+  return <>
+    <NewTask />
+    <Task />
+  </>
 }
 
 ReactDOM.render(<App/>, document.querySelector("#app"));
