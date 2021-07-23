@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Operations from "./Operations";
 
 const Task = ({title, description}) => {
+    const [isOn, setIsOn] = useState(false);
+
+    const handleIsOn = () => {
+        setIsOn(prev => !prev)
+    };
+
     return (
         <section className="card mt-5 shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
@@ -14,7 +21,7 @@ const Task = ({title, description}) => {
                     {/*//   Przyciski "Add operation" i "Finish" mają być widoczne*/}
                     {/*//   tylko jeżeli status zadania jest "open"*/}
                     {/*// -->*/}
-                    <button className="btn btn-info btn-sm mr-2">
+                    <button className="btn btn-info btn-sm mr-2" onClick={handleIsOn}>
                         Add operation
                         <i className="fas fa-plus-circle ml-1"></i>
                     </button>
@@ -23,7 +30,6 @@ const Task = ({title, description}) => {
                         Finish
                         <i className="fas fa-archive ml-1"></i>
                     </button>
-
 
                     {/*// <!--*/}
                     {/*//   Przycisk usuwania ma być widoczny tylko*/}
@@ -35,8 +41,7 @@ const Task = ({title, description}) => {
                 </div>
             </div>
 
-
-            {/*// <!-- Komponent Operations -->*/}
+            <Operations form={isOn} setForm={handleIsOn}/>
         </section>
     );
 };

@@ -34,7 +34,7 @@ const Operations = ({form, setForm}) => {
         </div>
 
         <ul className="list-group list-group-flush">
-            {/*{operations.map((el, index) => <Operation key={index} el={el}/>)}*/}
+            {operations.map((el, index) => <Operation key={index} el={el}/>)}
         </ul>
         </>
 );
