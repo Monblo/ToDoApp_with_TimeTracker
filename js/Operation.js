@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Operation = ({el, remove}) => {
+const Operation = ({el, remove, taskStatus}) => {
     const [time, setTime] = useState();
     const [timeIsOn, setTimeIsOn] = useState(false);
     const [inputTime, setInputTime] = useState();
@@ -18,8 +18,8 @@ const Operation = ({el, remove}) => {
         timeToggle()
     };
 
-    const handleRemove = (index) => {
-        remove(index)
+    const handleRemove = () => {
+        remove()
     };
 
     const hour = Math.floor(time/60);
@@ -44,10 +44,10 @@ const Operation = ({el, remove}) => {
             </form>}
 
             {!timeIsOn && <div>
-                <button className="btn btn-outline-success btn-sm mr-2" onClick={timeToggle}>
+                {taskStatus === 'open' && <button className="btn btn-outline-success btn-sm mr-2" onClick={timeToggle}>
                     Add time
                     <i className="fas fa-clock ml-1"></i>
-                </button>
+                </button>}
 
                 <button className="btn btn-outline-danger btn-sm" onClick={handleRemove}><i className="fas fa-trash"></i></button>
             </div>}

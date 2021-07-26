@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Operation from "./Operation";
 
-const Operations = ({form, setForm}) => {
+const Operations = ({form, setForm, taskStatus}) => {
     const [operation, setOperation] = useState('');
     const [operations, setOperations] = useState([])
 
@@ -15,8 +15,8 @@ const Operations = ({form, setForm}) => {
         setForm()
     };
 
-    const removeOperation = (id) => {
-        setOperation(prev => prev.filter(el => el.id !== id))
+    const removeOperation = () => {
+        setOperations(operations.filter((el,index) => el.index !== index))
     };
 
     return (
@@ -38,7 +38,7 @@ const Operations = ({form, setForm}) => {
         </div>
 
         <ul className="list-group list-group-flush">
-            {operations.map((el, index) => <Operation key={index} el={el} remove={removeOperation}/>)}
+            {operations.map((el, index) => <Operation key={index} el={el} remove={removeOperation} taskStatus={taskStatus}/>)}
         </ul>
         </>
 );

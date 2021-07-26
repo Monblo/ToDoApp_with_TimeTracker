@@ -15,9 +15,15 @@ function App() {
     setTasks(prev => [task, ...prev])
   };
 
+  const removeTask = () => {
+    setTasks(tasks.filter((el,i) => el.i !== i))
+  };
+
+  console.log(tasks)
+
   return <>
     <NewTask onNewTask={addNewTask}/>
-    {tasks.map((el, i) => <Task key={i} {...el} />)}
+    {tasks.map((el, i) => <Task key={i} {...el} remove={removeTask}/>)}
   </>
 }
 
