@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Operations from "./Operations";
+import {deleteTasks} from "./api/tasks";
 
-const Task = ({title, description, status: taskStatus, remove}) => {
+const Task = ({title, description, id, status: taskStatus, remove}) => {
     const [isOn, setIsOn] = useState(false);
     const [status, setStatus] = useState(taskStatus);
 
@@ -12,7 +13,7 @@ const Task = ({title, description, status: taskStatus, remove}) => {
     };
 
     const handleRemove = () => {
-        remove()
+        deleteTasks(id,() => remove(id))
     };
 
     const finishedTask = () => {

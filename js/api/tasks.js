@@ -33,3 +33,19 @@ export const postTasks = (task, successCallback) => {
         .catch((err) => console.log(err));
 };
 
+export const deleteTasks = (id, successCallback) => {
+    fetch(`${API_URL}/tasks/${id}`, {
+        headers: {
+            "Authorization": API_KEY
+        },
+        method: 'DELETE'
+    })
+        .then((r) => r.json())
+        .then((data) => {
+            if (data.error === false && typeof successCallback === "function") {
+                successCallback();
+            }
+        })
+        .catch((err) => console.log(err));
+};
+
