@@ -15,6 +15,10 @@ const Operations = ({form, setForm}) => {
         setForm()
     };
 
+    const removeOperation = (id) => {
+        setOperation(prev => prev.filter(el => el.id !== id))
+    };
+
     return (
         <>
         <div className="card-body">
@@ -34,7 +38,7 @@ const Operations = ({form, setForm}) => {
         </div>
 
         <ul className="list-group list-group-flush">
-            {operations.map((el, index) => <Operation key={index} el={el}/>)}
+            {operations.map((el, index) => <Operation key={index} el={el} remove={removeOperation}/>)}
         </ul>
         </>
 );
