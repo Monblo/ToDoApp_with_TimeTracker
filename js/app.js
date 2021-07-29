@@ -23,7 +23,7 @@ function App() {
 
   return <>
     <NewTask onNewTask={addNewTask}/>
-    {tasks.map((el, i) => <Task key={i} {...el} remove={removeTask}/>)}
+    {tasks.map((el) => <Task key={el.id} {...el} remove={removeTask}/>)}
   </>
 }
 

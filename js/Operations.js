@@ -1,31 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import Operation from "./Operation";
-import {getOperations} from "./api/tasks";
+import {deleteOperations, postOperation} from "./api/tasks";
 
-const Operations = ({form, setForm, taskStatus, operations, setOperations, taskId}) => {
-    const [operation, setOperation] = useState('');
+const Operations = ({form, setForm, status, operations, onNewOperation, taskId, remove}) => {
+    const [operationDescription, setOperationDescription] = useState('');
 
-    const addOperation = (e) => {
-        setOperation(e.target.value)
+    const handleOperation = (e) => {
+        setOperationDescription(e.target.value)
     };
 
-    // const operationSumbit = (e) => {
-    //     e.preventDefault();
-    //     setOperations(prev => [operation, ...prev])
-    //     setForm()
-    // };
-    //
-    // const removeOperation = () => {
-    //     setOperations(operations.filter((el,index) => el.index !== index))
-    // };
+    const handleAddOperation = (e) => {
+        e.preventDefault()
+        const operation = {
+            description: operationDescription,
+            timeSpent: 0
+        }
+        postOperation(taskId,operation,onNewOperation(operation))
+        setForm()
+        setOperationDescription('')
+    };
 
     return (
         <>
         <div className="card-body">
-            {form && <form onSubmit={''}>
+            {form && <form onSubmit={handleAddOperation}>
                 <div className="input-group">
                     <input type="text" className="form-control" placeholder="Operation description"
-                    onChange={addOperation}/>
+                           value={operationDescription}
+                            onChange={handleOperation}/>
 
                     <div className="input-group-append">
                         <button className="btn btn-info" type='submit'>
@@ -39,8 +41,8 @@ const Operations = ({form, setForm, taskStatus, operations, setOperations, taskI
 
         <ul className="list-group list-group-flush">
             {operations.map((el) => <Operation key={el.id} {...el}
-                                                      // remove={removeOperation}
-                                                      taskStatus={taskStatus}/>)}
+                                                      remove={remove}
+                                                      status={status}/>)}
         </ul>
         </>
 )

@@ -13,7 +13,7 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
         setIsOn(prev => !prev)
     };
 
-    const handleRemove = () => {
+    const handleRemoveTask = () => {
         deleteTasks(id,() => remove(id))
     };
 
@@ -24,6 +24,14 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
     useEffect(() => {
         getOperations(id, setOperations)
     },[]);
+
+    const addNewOperation = (operation) => {
+        setOperations(prev => [operation, ...prev])
+    };
+
+    const removeOperation = () => {
+        setOperations(operations.filter(el => el.id !== id))
+    };
 
     return (
         <section className="card mt-5 shadow-sm">
@@ -48,7 +56,7 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
                     {/*//   Przycisk usuwania ma być widoczny tylko*/}
                     {/*//   jeżeli nie ma żadnych operacji w zadaniu*/}
                     {/*// -->*/}
-                    <button className="btn btn-outline-danger btn-sm ml-2" onClick={handleRemove}>
+                    <button className="btn btn-outline-danger btn-sm ml-2" onClick={handleRemoveTask}>
                         <i className="fas fa-trash false"></i>
                     </button>
                 </div>
@@ -56,10 +64,11 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
 
             <Operations form={isOn}
                         setForm={handleIsOn}
-                        taskStatus={status}
+                        status={status}
                         operations={operations}
-                        setOperations={setOperations}
+                        onNewOperation={addNewOperation}
                         taskId={id}
+                        remove={removeOperation}
             />
         </section>
     );

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
+import {deleteOperations} from "./api/tasks";
 
-const Operation = ({description, id, timeSpent, taskStatus}) => {
+const Operation = ({description, id, timeSpent, taskStatus, remove}) => {
     const [time, setTime] = useState(timeSpent);
     const [timeIsOn, setTimeIsOn] = useState(false);
     const [inputTime, setInputTime] = useState();
@@ -18,12 +19,12 @@ const Operation = ({description, id, timeSpent, taskStatus}) => {
         timeToggle()
     };
 
-    const handleRemove = () => {
-        remove()
-    };
-
     const hour = Math.floor(time/60);
     const minutes = time % 60;
+
+    const handleRemoveOperation = () => {
+        deleteOperations(id, () => remove(id))
+    };
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -35,7 +36,7 @@ const Operation = ({description, id, timeSpent, taskStatus}) => {
             {timeIsOn && <form>
                 <div className="input-group input-group-sm">
                     <input type="number" className="form-control" placeholder="Spent time in minutes"
-                           style={{width: '12rem'}} onChange={changeInput}/>
+                           style={{width: '12rem'}} value={inputTime} onChange={changeInput}/>
                     <div className="input-group-append">
                         <button className="btn btn-outline-success" onClick={addTime}><i className="fas fa-save"></i></button>
                         <button className="btn btn-outline-dark" onClick={timeToggle}><i className="fas fa-times false"></i></button>
@@ -49,7 +50,8 @@ const Operation = ({description, id, timeSpent, taskStatus}) => {
                     <i className="fas fa-clock ml-1"></i>
                 </button>}
 
-                <button className="btn btn-outline-danger btn-sm" onClick={handleRemove}><i className="fas fa-trash"></i></button>
+                <button className="btn btn-outline-danger btn-sm" onClick={handleRemoveOperation}>
+                    <i className="fas fa-trash"></i></button>
             </div>}
         </li>
     );
