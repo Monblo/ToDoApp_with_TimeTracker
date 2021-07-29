@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Operations from "./Operations";
-import {deleteTasks} from "./api/tasks";
+import {deleteTasks, getOperations} from "./api/tasks";
 
 const Task = ({title, description, id, status: taskStatus, remove}) => {
     const [isOn, setIsOn] = useState(false);
     const [status, setStatus] = useState(taskStatus);
+    const [operations, setOperations] = useState([])
 
     console.log(status)
 
@@ -20,6 +21,10 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
         setStatus('close')
     };
 
+    useEffect(() => {
+        getOperations(id, setOperations)
+    },[]);
+
     return (
         <section className="card mt-5 shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
@@ -29,10 +34,6 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
                 </div>
 
                 <div>
-                    {/*// <!--*/}
-                    {/*//   Przyciski "Add operation" i "Finish" mają być widoczne*/}
-                    {/*//   tylko jeżeli status zadania jest "open"*/}
-                    {/*// -->*/}
                     {status==='open' && <button className="btn btn-info btn-sm mr-2" onClick={handleIsOn}>
                         Add operation
                         <i className="fas fa-plus-circle ml-1"></i>
@@ -53,7 +54,13 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
                 </div>
             </div>
 
-            <Operations form={isOn} setForm={handleIsOn} taskStatus={status}/>
+            <Operations form={isOn}
+                        setForm={handleIsOn}
+                        taskStatus={status}
+                        operations={operations}
+                        setOperations={setOperations}
+                        taskId={id}
+            />
         </section>
     );
 };

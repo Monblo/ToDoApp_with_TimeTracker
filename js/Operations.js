@@ -1,28 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Operation from "./Operation";
+import {getOperations} from "./api/tasks";
 
-const Operations = ({form, setForm, taskStatus}) => {
+const Operations = ({form, setForm, taskStatus, operations, setOperations, taskId}) => {
     const [operation, setOperation] = useState('');
-    const [operations, setOperations] = useState([])
 
     const addOperation = (e) => {
         setOperation(e.target.value)
     };
 
-    const operationSumbit = (e) => {
-        e.preventDefault();
-        setOperations(prev => [operation, ...prev])
-        setForm()
-    };
-
-    const removeOperation = () => {
-        setOperations(operations.filter((el,index) => el.index !== index))
-    };
+    // const operationSumbit = (e) => {
+    //     e.preventDefault();
+    //     setOperations(prev => [operation, ...prev])
+    //     setForm()
+    // };
+    //
+    // const removeOperation = () => {
+    //     setOperations(operations.filter((el,index) => el.index !== index))
+    // };
 
     return (
         <>
         <div className="card-body">
-            {form && <form onSubmit={operationSumbit}>
+            {form && <form onSubmit={''}>
                 <div className="input-group">
                     <input type="text" className="form-control" placeholder="Operation description"
                     onChange={addOperation}/>
@@ -38,10 +38,12 @@ const Operations = ({form, setForm, taskStatus}) => {
         </div>
 
         <ul className="list-group list-group-flush">
-            {operations.map((el, index) => <Operation key={index} el={el} remove={removeOperation} taskStatus={taskStatus}/>)}
+            {operations.map((el) => <Operation key={el.id} {...el}
+                                                      // remove={removeOperation}
+                                                      taskStatus={taskStatus}/>)}
         </ul>
         </>
-);
+)
 };
 
 export default Operations;

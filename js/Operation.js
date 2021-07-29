@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-const Operation = ({el, remove, taskStatus}) => {
-    const [time, setTime] = useState();
+const Operation = ({description, id, timeSpent, taskStatus}) => {
+    const [time, setTime] = useState(timeSpent);
     const [timeIsOn, setTimeIsOn] = useState(false);
     const [inputTime, setInputTime] = useState();
 
@@ -28,7 +28,7 @@ const Operation = ({el, remove, taskStatus}) => {
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">
             <div>
-                {el}
+                {description}
                 {time > 0 && <span className="badge badge-success badge-pill ml-2"> {hour}h {minutes}m </span>}
             </div>
 
