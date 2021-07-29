@@ -12,9 +12,9 @@ const NewTask = ({onNewTask}) => {
             description,
             status: 'open'
         }
+        postTasks(task, onNewTask(task))
         setTitle('')
         setDescription('')
-        postTasks(task, onNewTask(task))
     };
 
     return (

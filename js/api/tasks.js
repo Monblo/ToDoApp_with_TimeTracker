@@ -33,7 +33,23 @@ export const postTasks = (task, successCallback) => {
         .catch((err) => console.log(err));
 };
 
-
+export const updateTasks = (id, task, successCallback) => {
+    fetch(`${API_URL}/tasks/${id}`, {
+        headers: {
+            "Authorization": API_KEY,
+            "Content-Type": "application/json"
+        },
+        method: 'PUT',
+        body: JSON.stringify(task),
+    })
+        .then((r) => r.json())
+        .then((data) => {
+            if (data.error === false && typeof successCallback === "function") {
+                successCallback(data.data);
+            }
+        })
+        .catch((err) => console.log(err));
+};
 
 export const deleteTasks = (id, successCallback) => {
     fetch(`${API_URL}/tasks/${id}`, {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Operations from "./Operations";
-import {deleteTasks, getOperations} from "./api/tasks";
+import {deleteTasks, getOperations, updateTasks} from "./api/tasks";
 
 const Task = ({title, description, id, status: taskStatus, remove}) => {
     const [isOn, setIsOn] = useState(false);
@@ -19,6 +19,15 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
 
     const finishedTask = () => {
         setStatus('close')
+    };
+
+    const handleFinishTask = () => {
+        const task = {
+            title,
+            description,
+            status: 'closed'
+        }
+        updateTasks(id,task,finishedTask)
     };
 
     useEffect(() => {
@@ -47,7 +56,7 @@ const Task = ({title, description, id, status: taskStatus, remove}) => {
                         <i className="fas fa-plus-circle ml-1"></i>
                     </button>}
 
-                    {status==='open' && <button className="btn btn-dark btn-sm" onClick={finishedTask}>
+                    {status==='open' && <button className="btn btn-dark btn-sm" onClick={handleFinishTask}>
                         Finish
                         <i className="fas fa-archive ml-1"></i>
                     </button>}
